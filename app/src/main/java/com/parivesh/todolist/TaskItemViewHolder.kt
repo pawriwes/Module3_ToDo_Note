@@ -24,7 +24,9 @@ class TaskItemViewHolder(
         binding.taskName.setOnClickListener {
             clickListener.edit(task)
         }
-
+        binding.taskDesc.setOnClickListener {
+            clickListener.edit(task)
+        }
         updateStrikeThrough(task.completed)
     }
 

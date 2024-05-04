@@ -60,12 +60,12 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DB_NAME, nul
         values.put(KEY_TITLE, task.name)
         values.put(KEY_DESCRIPTION, task.description)
         values.put(KEY_IS_COMPLETED, task.completed)
-        db.update(TABLE_NOTES, values, "$KEY_ID=?", arrayOf(task.id.toString()))
+        db.update(TABLE_NOTES, values, "$KEY_ID=?", arrayOf(task.id))
         db.close()
     }
     fun deleteNote(task: TaskItem) {
         val db = writableDatabase
-        db.delete(TABLE_NOTES, "$KEY_ID=?", arrayOf(task.id.toString()))
+        db.delete(TABLE_NOTES, "$KEY_ID=?", arrayOf(task.id))
         db.close()
     }
 }

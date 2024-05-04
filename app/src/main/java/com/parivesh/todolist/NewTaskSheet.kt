@@ -18,12 +18,12 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val activity = requireActivity()
         if (taskItem != null) {
-            binding.title.text = "Edit Task"
+            binding.title.text = getString(R.string.edit_task)
             val editable = Editable.Factory.getInstance()
             binding.name.text = editable.newEditable(taskItem!!.name)
             binding.desc.text = editable.newEditable(taskItem!!.description)
         } else {
-            binding.title.text = "New Task"
+            binding.title.text = getString(R.string.new_task)
             binding.name.text = null
             binding.deleteBtn.visibility = View.GONE // Hide delete button
         }

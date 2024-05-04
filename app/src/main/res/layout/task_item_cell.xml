@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:text="Task Name" />
+                android:text="" />
 
             <TextView
                 android:id="@+id/task_desc"
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:text="Task description" />
+                android:text="" />
         </LinearLayout>
     </LinearLayout>
 

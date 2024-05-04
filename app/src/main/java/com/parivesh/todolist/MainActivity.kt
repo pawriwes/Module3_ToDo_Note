@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity(), TaskItemClickListner, TaskChangeListen
         }
         setRecyclerView()
         loadDataFromDatabase()
-
     }
     private fun loadDataFromDatabase() {
         val db = DatabaseHandler(this)

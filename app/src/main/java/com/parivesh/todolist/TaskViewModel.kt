@@ -1,9 +1,7 @@
 package com.parivesh.todolist
 
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.util.UUID
 
 class TaskViewModel : ViewModel() {
     var taskItems = MutableLiveData<List<TaskItem>>()

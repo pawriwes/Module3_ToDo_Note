@@ -1,6 +1,5 @@
 package com.parivesh.todolist
 
-import android.content.ContentValues
 import android.content.Context
 import android.graphics.Paint
 import androidx.recyclerview.widget.RecyclerView

@@ -1,11 +1,8 @@
 package com.parivesh.todolist
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.parivesh.todolist.databinding.ActivityMainBinding
@@ -25,9 +22,14 @@ class MainActivity : AppCompatActivity(), TaskItemClickListner, TaskChangeListen
             NewTaskSheet(null).show(supportFragmentManager, "newTaskTag")
         }
         setRecyclerView()
+        loadDataFromDatabase()
 
     }
-
+    private fun loadDataFromDatabase() {
+        val db = DatabaseHandler(this)
+        val taskItems = db.getAllNotes()
+        taskViewModel.taskItems.value = taskItems
+    }
     private fun setRecyclerView() {
         adapter = TaskItemAdapter(emptyList(), this)
         binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)

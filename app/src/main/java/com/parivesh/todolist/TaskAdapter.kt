@@ -18,7 +18,8 @@ class TaskItemAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = TaskItemCellBinding.inflate(inflater, parent, false)
-        return TaskItemViewHolder(parent.context, binding, clickListener)
+        val dbHelper = DatabaseHandler(parent.context)
+        return TaskItemViewHolder(parent.context, binding, clickListener, dbHelper)
     }
 
     override fun getItemCount(): Int = tasks.size

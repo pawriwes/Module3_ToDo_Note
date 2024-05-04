@@ -2,7 +2,6 @@ package com.parivesh.todolist
 
 import android.os.Bundle
 import android.text.Editable
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +14,6 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentNewTaskSheetBinding
     private lateinit var taskViewModel: TaskViewModel
     var taskChangeListener: TaskChangeListener? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val activity = requireActivity()
@@ -30,26 +24,39 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
             binding.desc.text = editable.newEditable(taskItem!!.description)
         } else {
             binding.title.text = "New Task"
+            binding.name.text = null
+            binding.deleteBtn.visibility = View.GONE // Hide delete button
         }
         taskViewModel = ViewModelProvider(activity).get(TaskViewModel::class.java)
         binding.saveBtn.setOnClickListener {
             saveAction()
         }
+        binding.deleteBtn.setOnClickListener {
+            deleteAction()
+        }
     }
 
     private fun saveAction() {
+        val db = DatabaseHandler(requireContext())
         val name = binding.name.text.toString()
         val desc = binding.desc.text.toString()
         if (taskItem == null) {
             val newTask = TaskItem(name, desc)
             taskViewModel.addTaskItem(newTask)
+            db.insertNote(newTask)
         } else {
             taskItem!!.name = name
             taskItem!!.description = desc
+            taskViewModel.updateTaskItem(taskItem!!)
+            db.updateNote(taskItem!!)
         }
-        binding.name.setText("")
-        binding.desc.setText("")
         taskChangeListener?.onTaskChanged() // Notify the listener
+        dismiss()
+    }
+    private fun deleteAction() {
+        taskViewModel.deleteTaskItem(taskItem!!)
+        val db = DatabaseHandler(requireContext())
+        db.deleteNote(taskItem!!)
         dismiss()
     }
 
@@ -57,10 +64,7 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentNewTaskSheetBinding.inflate(inflater, container, false)
         return binding.root
     }
-
-
 }
